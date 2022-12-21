@@ -1,3 +1,6 @@
+designs
+
+
 # IDE files
 .idea
 
@@ -32,5 +35,7 @@ node_modules
 
 # Runtime configuration for swagger app
 config/runtime.yaml
+
+
 
 .DS_Store
