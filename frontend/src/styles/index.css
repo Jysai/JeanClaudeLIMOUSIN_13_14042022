@@ -41,6 +41,12 @@ html {
     align-items: center;
     padding: 5px 20px;
   }
+
+  .navbar__btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   
   .main-nav a {
     font-weight: bold;
@@ -275,6 +281,12 @@ html {
     background-color: #00bc77;
     color: #fff;
   }
+
+  /* display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  min-height: 60vh; */
+
   
   @media (min-width: 720px) {
     .account {

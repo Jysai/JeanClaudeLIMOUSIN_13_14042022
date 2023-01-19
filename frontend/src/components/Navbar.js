@@ -1,23 +1,35 @@
 import React from "react";
-import ArgentBankLogo from "../assets/argentBankLogo.png"
+import { Link } from "react-router-dom";
+import ArgentBankLogo from "../assets/argentBankLogo.png";
+import BtnSignIn from "./BtnSignIn";
+import BtnLogout from "./BtnLogout";
+import Profile from "./Profile";
 
 const Navbar = () => {
+  const getToken = localStorage.getItem("token");
   return (
     <div>
-      <nav class="main-nav">
-        <a class="main-nav-logo" href="./">
+      <nav className="main-nav">
+        <Link className="main-nav-logo" to="/">
+          {" "}
           <img
-            class="main-nav-logo-image"
-            src={ArgentBankLogo} 
+            className="main-nav-logo-image"
+            src={ArgentBankLogo}
             alt="Argent Bank Logo"
           />
-          <h1 class="sr-only">Argent Bank</h1>
-        </a>
+          <h1 className="sr-only">Argent Bank</h1>
+        </Link>
         <div>
-          <a class="main-nav-item" href="./signin">
-            <i class="fa fa-user-circle"></i>
-            Sign In
-          </a>
+          {getToken ? (
+            <div className="main-nav-item">
+              <Profile />
+              <BtnLogout />
+            </div>
+          ) : (
+            <div className="main-nav-item">
+              <BtnSignIn />
+            </div>
+          )}
         </div>
       </nav>
     </div>

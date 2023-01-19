@@ -4,13 +4,25 @@ import HeaderUser from '../components/HeaderUser';
 import Navbar from '../components/Navbar';
 import Transactions from '../components/Transactions';
 
+
 const User = () => {
+    const getToken = localStorage.getItem("token");
     return (
         <div>
             <Navbar/>
-            <main class="main bg-dark">
-            <HeaderUser/>
-            <Transactions/>
+            <main className="main bg-dark">
+            {getToken ? (
+            <div >
+              <HeaderUser/>
+               <Transactions/>
+            </div>
+          ) : (
+            <div >
+              <p>Accès refusé</p>
+            </div>
+          )}
+
+            
             </main>
             <Footer/>
 
