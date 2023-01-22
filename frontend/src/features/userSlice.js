@@ -1,13 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const userSlice = createSlice({
-    name: "auth",
+    name: "user",
     initialState:{
         email: "",
         firstName: "",
         lastName: "",
-        user: null,
-        token: null
+        token: ""
     },
     reducers:{
         login: (state, action) => {
@@ -16,14 +15,19 @@ const userSlice = createSlice({
             state.firstName = firstName
             state.lastName = lastName
             state.token = token
-            state.isLogged = true;
         },
+        edit: (state, action) => {
+            const { firstName, lastName} = action.payload
+            state.firstName = firstName
+            state.lastName = lastName
+        }
+        
     },
 })
 
-export const {  login } = userSlice.actions;
+export const { login, edit } = userSlice.actions;
+
+export const selectUser = (state) => state.user
 
 export default userSlice.reducer
 
-export const selectUser = (state) => state.user
-export const selectCurrentToken = (state) => state.user.token

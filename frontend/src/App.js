@@ -1,32 +1,31 @@
 import React, { useEffect}from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import User from "./pages/User";
 import Layout from "./components/Layout";
 
 import "./styles/index.css";
-import { login, selectUser } from "./features/userSlice";
+import { login } from "./features/userSlice";
 import { findUser } from "./services/authAPI";
 
 
 function App() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const getToken = localStorage.getItem("token");
+  // const getToken = localStorage.getItem("token");
   
-  useEffect(() =>{
-    const checkIsLoggin = async() =>{
-      if(getToken){
-        const userProfile = await findUser(getToken);
-        
-        dispatch(login(userProfile))
-      }
-    }
-    checkIsLoggin()
-  })
-
+  // useEffect(() =>{
+  //   const checkIsLoggin = async() =>{
+  //     if(getToken){
+  //       const userProfile = await findUser(getToken);
+       
+  //       dispatch(login(userProfile))
+  //     }
+  //   }
+  //   checkIsLoggin()
+  // })
 
   return (
     <div className="App">

@@ -1,10 +1,16 @@
 import { React, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { authUser } from "../services/authAPI";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
+import { findUser } from "../services/authAPI";
+import { login, selectUser } from '../features/userSlice';
+
 
 const Authentication = () => {
+  const dispatch = useDispatch();
+  
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPwd] = useState("");
@@ -20,6 +26,13 @@ const Authentication = () => {
 
     if (result) {
       const token = result.data.body.token;
+
+      if(token){
+        const userProfile = await findUser(token);
+        
+        dispatch(login(userProfile))
+      }
+
 
       localStorage.setItem("token", token);
       localStorage.setItem("email", data.username);

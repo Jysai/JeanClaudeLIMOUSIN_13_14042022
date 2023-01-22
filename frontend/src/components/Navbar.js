@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import ArgentBankLogo from "../assets/argentBankLogo.png";
 import BtnSignIn from "./BtnSignIn";
 import BtnLogout from "./BtnLogout";
-import Profile from "./Profile";
+
+import BtnProfile from "./BtnProfile";
 
 const Navbar = () => {
   const getToken = localStorage.getItem("token");
@@ -22,7 +23,7 @@ const Navbar = () => {
         <div>
           {getToken ? (
             <div className="main-nav-item">
-              <Profile />
+              <BtnProfile />
               <BtnLogout />
             </div>
           ) : (
