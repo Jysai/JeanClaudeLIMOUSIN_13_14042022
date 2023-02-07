@@ -1,36 +1,55 @@
 import { React, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { edit, selectUser } from "../features/userSlice";
+import { edit, selectUser, login } from "../features/userSlice";
 
-import { editUser } from "../services/authAPI";
+import { editUser, findUser } from "../services/authAPI";
 
 const HeaderUser = () => {
   const firstnameInput = useRef();
   const lastnameInput = useRef();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
+  const getToken = localStorage.getItem("token");
 
   const [isOpen, setOpen] = useState(false);
+  const [valFirstName, setValFirstName] = useState("");
+  const [valLastName, setValLastName] = useState("");
 
   const showEdit = () => setOpen(!isOpen);
 
-  const handleEdit = async (e) => {
-    const getToken = localStorage.getItem("token");
+  const verifUserLogged = async () => {
+    if (getToken || user.token) {
+      const userProfile = await findUser(getToken || user.token);
 
+      dispatch(login(userProfile));
+    }
+  };
+  verifUserLogged();
+
+  const handleEdit = async (e) => {
     const data = {
       firstName: firstnameInput.current.value,
       lastName: lastnameInput.current.value,
     };
 
-    const updateProfile = await editUser(
-      getToken,
-      data.firstName,
-      data.lastName
-    );
-
-    dispatch(edit(updateProfile));
-    showEdit();
+    if (data.firstName === "" || data.lastName === "") {
+      const updateProfile = await editUser(
+        user.token || getToken,
+        data.firstName || user.firstName,
+        data.lastName || user.lastName
+      );
+      dispatch(edit(updateProfile));
+      showEdit();
+    } else {
+      const updateProfile = await editUser(
+        user.token || getToken,
+        data.firstName,
+        data.lastName
+      );
+      dispatch(edit(updateProfile));
+      showEdit();
+    }
   };
 
   return (
@@ -56,6 +75,10 @@ const HeaderUser = () => {
                 ref={firstnameInput}
                 className="input-firstname"
                 placeholder={user.firstName}
+                value={valFirstName}
+                onChange={(e) => {
+                  setValFirstName(e.target.value.trim());
+                }}
               ></input>
               <input
                 type="text"
@@ -63,6 +86,10 @@ const HeaderUser = () => {
                 ref={lastnameInput}
                 className="input-lastname"
                 placeholder={user.lastName}
+                value={valLastName}
+                onChange={(e) => {
+                  setValLastName(e.target.value.trim());
+                }}
               ></input>
             </div>
             <div>
@@ -81,6 +108,7 @@ const HeaderUser = () => {
             </div>
           </div>
         </div>
+        <p className="message-error"></p>
       </div>
     </div>
   );

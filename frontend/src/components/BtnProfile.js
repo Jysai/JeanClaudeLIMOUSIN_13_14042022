@@ -6,24 +6,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { findUser } from "../services/authAPI";
 
+
+
+
 const BtnProfile = () => {
-    const dispatch = useDispatch();
-
-    const getToken = localStorage.getItem("token");
-    
-    const verifUserLogged = async () => {
-        if(getToken){
-            const userProfile = await findUser(getToken);
-            
-            dispatch(login(userProfile))
-          }
-    }
-    verifUserLogged()
-
-    
-
 
     const user = useSelector(selectUser);
+        
 
     return (
         <NavLink to="/user" >

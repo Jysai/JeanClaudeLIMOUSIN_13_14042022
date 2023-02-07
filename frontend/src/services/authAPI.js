@@ -24,7 +24,8 @@ export const findUser = async (token) => {
       firstName: res.data.body.firstName,
       lastName: res.data.body.lastName,
       email: res.data.body.email,
-      id: res.data.body.id
+      id: res.data.body.id,
+      
     };
   } catch (err) {
     console.log(err);

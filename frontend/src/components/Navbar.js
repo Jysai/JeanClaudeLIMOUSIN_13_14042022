@@ -3,11 +3,16 @@ import { Link } from "react-router-dom";
 import ArgentBankLogo from "../assets/argentBankLogo.png";
 import BtnSignIn from "./BtnSignIn";
 import BtnLogout from "./BtnLogout";
-
+import { useSelector, useDispatch } from "react-redux";
+import { selectUser, saveToken} from "../features/userSlice";
 import BtnProfile from "./BtnProfile";
+import { authUser } from "../services/authAPI";
 
 const Navbar = () => {
+
+  const user = useSelector(selectUser);
   const getToken = localStorage.getItem("token");
+
   return (
     <div>
       <nav className="main-nav">
@@ -21,7 +26,7 @@ const Navbar = () => {
           <h1 className="sr-only">Argent Bank</h1>
         </Link>
         <div>
-          {getToken ? (
+          {user.token || getToken ? (
             <div className="main-nav-item">
               <BtnProfile />
               <BtnLogout />

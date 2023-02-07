@@ -14,18 +14,23 @@ const userSlice = createSlice({
             state.email = email
             state.firstName = firstName
             state.lastName = lastName
-            state.token = token
         },
         edit: (state, action) => {
             const { firstName, lastName} = action.payload
             state.firstName = firstName
             state.lastName = lastName
+        },
+        saveToken: (state, action) => {
+            const { token } = action.payload
+            state.token = token
+        }, 
+        logout: (state, action) => {
+            state.token = null;
         }
-        
     },
 })
 
-export const { login, edit } = userSlice.actions;
+export const { login, edit, saveToken, logout } = userSlice.actions;
 
 export const selectUser = (state) => state.user
 
