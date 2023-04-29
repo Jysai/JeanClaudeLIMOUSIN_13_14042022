@@ -1,6 +1,4 @@
-# Project #10 - Argent Bank API
-
-This codebase contains the code needed to run the backend for Argent Bank.
+# Project
 
 ## Getting Started
 
@@ -13,22 +11,36 @@ Argent Bank uses the following tech stack:
 
 Please make sure you have the right versions and download both packages. You can verify this by using the following commands in your terminal:
 
-```bash
 # Check Node.js version
 node --version
 
 # Check Mongo version
 mongo --version
-```
+
+------------------------------------------------------------------------------
+
+### Frontend
+
+1. Open your terminal, go to frontend
+
+# Install dependencies
+npm install
+
+# Start local 
+npm run start
+
+The project should now be running at http://locahost:3000
+
+------------------------------------------------------------------------------
+
+### Backend
+
+This codebase contains the code needed to run the backend 
 
 ### Instructions
 
-1. Fork this repo
-1. Clone the repo onto your computer
-1. Open a terminal window in the cloned project
-1. Run the following commands:
+1. Open your terminal, go to server  
 
-```bash
 # Install dependencies
 npm install
 
@@ -37,7 +49,6 @@ npm run dev:server
 
 # Populate database with two users
 npm run populate-db
-```
 
 Your server should now be running at http://locahost:3001 and you will now have two users in your MongoDB database!
 
