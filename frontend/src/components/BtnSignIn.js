@@ -6,7 +6,7 @@ import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
 const BtnSignIn = () => {
 
     return (
-        <NavLink className="main-nav-item" to="/signin"><FontAwesomeIcon icon={faUserCircle} />Sign In</NavLink>
+        <NavLink className="navbar__btn" to="/login"><FontAwesomeIcon icon={faUserCircle} /><p className="navbar__p">Sign In</p></NavLink>
     );
 };
 

@@ -1,59 +1,36 @@
-import { React, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { React,  useState } from "react";
+import { useDispatch} from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { authUser } from "../services/authAPI";
+import { authUser, findUser } from "../services/authAPI";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import { findUser } from "../services/authAPI";
-import { login, saveToken, selectUser } from "../features/userSlice";
-
-
+import { login, saveToken} from "../features/userSlice";
 
 const Authentication = () => {
   const dispatch = useDispatch();
-  const user = useSelector(selectUser);
+
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPwd] = useState("");
 
-  const username = useRef();
+  // const username = useRef();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const result = await authUser(email, password);
+    const token = result.data.body.token;
+    dispatch(saveToken({ token }));
 
-    if (result) {
-      const token = result.data.body.token;
+    if (token) {
+      const userProfile = await findUser(token);
 
-      const checkBox = document.querySelector("#remember-me").checked;
+      dispatch(login(userProfile));
 
-      if (checkBox) {
-        localStorage.setItem("token", token);
-   
-      } else {
-        dispatch(saveToken({ token }));
-      }
-    
-
-      navigate("/user");
+      navigate("/profile");
     } else {
       console.log("Impossible de se connecter");
     }
-
-
-    
   };
-
-  // const getToken = localStorage.getItem("token");
-  // const verifUserLogged = async () => {
-  //   if (getToken || user.token) {
-  //     const userProfile = await findUser(getToken || user.token);
-
-  //     dispatch(login(userProfile));
-  //   }
-  // };
-  // verifUserLogged();
-
 
   const content = (
     <main className="main bg-dark">
@@ -66,7 +43,7 @@ const Authentication = () => {
             <input
               type="text"
               id="username"
-              ref={username}
+              // ref={username}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               autoComplete="off"

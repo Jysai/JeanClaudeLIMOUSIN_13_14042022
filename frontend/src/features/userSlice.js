@@ -6,11 +6,11 @@ const userSlice = createSlice({
         email: "",
         firstName: "",
         lastName: "",
-        token: ""
+        token: "",
     },
     reducers:{
         login: (state, action) => {
-            const { email, token, firstName, lastName } = action.payload
+            const { email, firstName, lastName } = action.payload
             state.email = email
             state.firstName = firstName
             state.lastName = lastName
@@ -25,7 +25,10 @@ const userSlice = createSlice({
             state.token = token
         }, 
         logout: (state, action) => {
-            state.token = null;
+            state.email = ""
+            state.firstName = ""
+            state.lastName = ""
+            state.token = "";
         }
     },
 })

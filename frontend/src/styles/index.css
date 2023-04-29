@@ -69,6 +69,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 5px 20px;
+  
 }
 
 .navbar__btn {
@@ -89,6 +90,21 @@ body {
 .main-nav-item {
   text-decoration: none;
   margin-right: 0.5rem;
+
+  display: flex;
+  align-items: center;
+}
+
+.navbar__p{
+  margin-left: 10px;
+}
+
+.fa-circle-user{
+  height: 35px;
+}
+
+.navbar__btn{
+  margin-left: 20px;
 }
 
 .main-nav-item:hover {

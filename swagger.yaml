@@ -5,7 +5,7 @@ info:
   version: '1.0.0'
   termsOfService: 'http://swagger.io/terms/'
 host: localhost:3001
-basePath: /api/v1
+basePath: /api/v2
 schemes:
   - http
 paths:
@@ -67,6 +67,7 @@ paths:
       description: API for fetching a user profile
       parameters:
         - in: header
+          type: string
           name: Authorization
           description: Attach Bearer JWT token
           required: true
@@ -91,6 +92,7 @@ paths:
       parameters:
         - in: header
           name: Authorization
+          type: string
           description: Attach Bearer JWT token
           required: true
         - in: body
@@ -110,6 +112,132 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
+  /transactions:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      summary: All user transactions API
+      description: API to retrieve all user transactions linked to an account
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          description: Attach Bearer JWT token
+          required: true
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transactions retrieved successfully
+          schema:
+            $ref: '#/definitions/AllTransactions'
+        '400':
+          description: Invalid Transaction ID supplied
+        '404':
+          description: Transaction ID not found
+        '500':
+          description: Internal Server Error
+  /transactions/{idTransaction}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      summary: User Transaction API
+      description: API to retrieve single user transactions 
+      parameters:
+        - in: path
+          name: idTransaction
+          description: ID of transaction
+          required: true
+          type: string
+        - in: header
+          name: Authorization
+          type: string
+          description: Attach Bearer JWT token
+          required: true
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction retrieved successfully
+          schema:
+            $ref: '#/definitions/OneTransaction'
+        '400':
+          description: Invalid Transaction ID supplied
+        '404':
+          description: Transaction ID not found
+        '500':
+          description: Internal Server Error
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      summary: User transaction API
+      description:  API User Transaction Update
+      parameters:
+        - in: path
+          name: idTransaction
+          description: ID of transaction
+          required: true
+          type: string
+        - in: header
+          name: Authorization
+          type: string
+          description: Attach Bearer JWT token
+          required: true
+        - in: body
+          name: body
+          description: Update user transaction attributes
+          required: true
+          schema:
+            $ref: '#/definitions/PutTransaction'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction updated successully
+          schema:
+            $ref: '#/definitions/OneTransaction'
+        '400':
+          description: Invalid Transaction ID supplied
+        '404':
+          description: Transaction ID not found
+        '500':
+          description: Internal Server Error
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      summary: User transaction API
+      description: API to delete a user transaction
+      parameters:
+        - in: path
+          name: idTransaction
+          description: ID of transaction
+          required: true
+          type: string
+        - in: header
+          name: Authorization
+          type: string
+          description: Attach Bearer JWT token
+          required: true
+
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction deleted
+        '400':
+          description: Invalid Transaction ID supplied
+        '404':
+          description: Transaction ID not found
+        '500':
+          description: Internal Server Error 
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -164,3 +292,44 @@ definitions:
         type: string
       lastName:
         type: string
+  AllTransactions:
+    type: object
+    properties:
+          idTransaction:
+            type: string
+          date:
+            type: string
+            format : date-time
+          description:
+            type: string  
+          amount:
+            type: integer
+          balance:
+            type: integer
+  OneTransaction:
+    type: object
+    properties:
+          idTransaction:
+            type: string
+          date:
+            type: string
+            format : date-time
+          description:
+            type: string  
+          amount:
+            type: integer
+          balance:
+            type: integer
+          category:
+            type: string
+          notes:
+            type: string           
+  PutTransaction:
+    type: object
+    properties:
+      category:
+        type: string
+      notes:
+        type: string
+
+      

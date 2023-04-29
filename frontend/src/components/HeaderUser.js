@@ -1,49 +1,39 @@
 import { React, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { edit, selectUser, login } from "../features/userSlice";
+import { edit, selectUser} from "../features/userSlice";
 
-import { editUser, findUser } from "../services/authAPI";
+import { editUser } from "../services/authAPI";
 
 const HeaderUser = () => {
   const firstnameInput = useRef();
   const lastnameInput = useRef();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
-  const getToken = localStorage.getItem("token");
-
+  
   const [isOpen, setOpen] = useState(false);
   const [valFirstName, setValFirstName] = useState("");
   const [valLastName, setValLastName] = useState("");
 
   const showEdit = () => setOpen(!isOpen);
 
-  const verifUserLogged = async () => {
-    if (getToken || user.token) {
-      const userProfile = await findUser(getToken || user.token);
-
-      dispatch(login(userProfile));
-    }
-  };
-  verifUserLogged();
-
   const handleEdit = async (e) => {
     const data = {
       firstName: firstnameInput.current.value,
       lastName: lastnameInput.current.value,
     };
-
-    if (data.firstName === "" || data.lastName === "") {
+    
+    if (data.firstName === "" || data.lastName === "") { // Edit l'un des deux input rempli mais si les input sont vides gardes les data stockés dans le store
       const updateProfile = await editUser(
-        user.token || getToken,
+        user.token ,
         data.firstName || user.firstName,
         data.lastName || user.lastName
       );
       dispatch(edit(updateProfile));
       showEdit();
-    } else {
+    } else { // Permet d'éditer quand les deux inputs sont remplis
       const updateProfile = await editUser(
-        user.token || getToken,
+        user.token ,
         data.firstName,
         data.lastName
       );

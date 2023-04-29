@@ -9,18 +9,15 @@ const BtnLogout = () => {
     // const navigate = useNavigate()
     const dispatch = useDispatch();
     const logoutAction = () =>{
-        const getToken = localStorage.getItem("token");
 
-        if (!getToken) {
+     
             dispatch(logout())
-        } else {
-            dispatch(localStorage.removeItem("token")) 
-        }
+      
 
     }
 
     return (
-       <NavLink className="main-nav-item" to="/" onClick={logoutAction}><FontAwesomeIcon icon={faSignOut} />Sign out</NavLink>
+       <NavLink className="navbar__btn" to="/" onClick={logoutAction}><FontAwesomeIcon icon={faSignOut} /><p className='navbar__p'>Sign out</p></NavLink>
     );
 };
 
